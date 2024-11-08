@@ -1,0 +1,31 @@
+@url = http://localhost:3333/api
+
+GET {{url}}/autores
+
+###
+GET  {{url}}/autores/30
+
+
+###
+POST {{url}}/autores
+Content-Type: application/json
+
+{
+    "nombre": "Maria",
+    "email":"Maria@antonio.com",
+    "imagen":"Laura.jpg"
+}
+
+###
+PUT {{url}}/autores/300
+Content-Type: application/json
+
+{
+    "nombre": "Luis Martinez",
+    "email": "luismartinez@example.com",
+    "imagen": "luis.jpg"
+}
+
+###
+DELETE {{url}}/autores/29
+

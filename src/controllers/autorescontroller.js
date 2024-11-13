@@ -1,4 +1,5 @@
 const {selectAll, selectIdAutor, createAutor, updateAutorById, deleteById}= require("../models/autoresmodel");
+const { selectPostIdAutor } = require("../models/postmodel");
 
 const getAllAutores = async(req,res,next)=>{
     try{
@@ -15,15 +16,25 @@ const getIdAutor= async(req,res,next)=>{
     try{
         const result=await selectIdAutor(idautor);
         
-        if (!result)
-            {
-               
-                return res.status(404).json({message: 'El autor no existe'})
-            }
             res.json(result)
     }catch(error){
         next(error);
     }
+}
+
+const getAutoresPost= async(req, res, next)=>{
+    try {
+        const [autores]= await selectAll();
+        // 
+        const promAutoresPost= autores.map(autor=> selectPostIdAutor(autor.idautor))
+        const postresult =await Promise.all(promAutoresPost);   
+        autores.forEach((autor, index)=> autor.posts = postresult[index][0] )
+        
+        res.json(autores)
+    } catch (error) {
+        next(error)
+    }
+
 }
 
 
@@ -75,5 +86,5 @@ const deleteAutorById= async(req, res, next)=>{
 
 
 module.exports={
-    getAllAutores, getIdAutor, postAutor, putAutor, deleteAutorById
+    getAllAutores, getIdAutor, postAutor, putAutor, deleteAutorById, getAutoresPost
 }

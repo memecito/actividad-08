@@ -1,11 +1,19 @@
-const {selectAll}= require("../models/postmodel")
+const {selectAllPost}= require("../models/postmodel")
 const getAllPost = async(req, res, next)=>{
     try{
-        const [result, fieldpaquet]= await selectAll();
+        const [result, fieldpaquet]= await selectAllPost();
         res.json(result);
     }catch(error){
         next(error);
     }
+}
+
+const getPostAutores= async (req, res, next)=>{
+try {
+    
+} catch (error) {
+    
+}
 }
 
 const getAllCategories=async(req,res,next)=>{
@@ -17,5 +25,5 @@ const getAllCategories=async(req,res,next)=>{
 }
 
 module.exports={
-    getAllPost, getAllCategories
+    getAllPost, getAllCategories,getPostAutores
 }

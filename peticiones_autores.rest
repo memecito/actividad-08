@@ -3,15 +3,17 @@
 GET {{url}}/autores
 
 ###
-GET  {{url}}/autores/30
+GET  {{url}}/autores/10
 
+###
+GET  {{url}}/post/autores
 
 ###
 POST {{url}}/autores
 Content-Type: application/json
 
 {
-    "nombre": "Maria",
+    "nombre": "AAA",
     "email":"Maria@antonio.com",
     "imagen":"Laura.jpg"
 }

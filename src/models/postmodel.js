@@ -2,12 +2,12 @@
 
 const pool = require("../config/db");
 
-function selectAll(){
-    return pool.query('select * from post')
+function selectAllPost(){
+    return pool.query('select * from posts')
 }
 
-function selectIdAutor(idAutor){
-    return pool.query('Select * from porst where idAutor = ?', [idAutor])
+function selectPostIdAutor(idAutor){
+    return pool.query('Select * from posts where autor_id = ?', [idAutor])
 }
 
 function selectAllCategories(){
@@ -16,5 +16,5 @@ function selectAllCategories(){
 
 
 module.exports={
-    selectAll, selectIdAutor, selectAllCategories
+    selectAllPost, selectPostIdAutor, selectAllCategories
 }

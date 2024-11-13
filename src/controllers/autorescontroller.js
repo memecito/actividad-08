@@ -43,8 +43,8 @@ const postAutor= async(req,res,next)=>{
     try {
         const [result, fieldpaquet]=await createAutor(req.body);
        
-             //recuperamos los datos del autor para confirmar que se ha creado bien
-        const [autor]= await selectIdAutor(result.insertId);
+        //recuperamos los datos del autor para confirmar que se ha creado bien
+        const autor= await selectIdAutor(result.insertId);
         if (!autor)
         {
             return res.json(null)

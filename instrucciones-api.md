@@ -33,6 +33,19 @@ retorno: un json con un cliente
 url: /api/post
 
 ## Registro
+{{url}}/
+Metodo: post
+
+body:
+{
+    titulo: string
+    descripcion: string
+    fecha_creacion: date
+    categoria: string
+    autor_id: number
+}
+
+Resultado: Consulta con el post creado
 
 ## Consulta por Autor
 

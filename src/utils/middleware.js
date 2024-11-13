@@ -1,4 +1,5 @@
 const { selectIdAutor, selectAutorByUsuario, selectAutorByEmail } = require("../models/autoresmodel");
+const { selectPostByTituloByAutor } = require("../models/postmodel");
 
 const comprobarId =async (req, res, next)=>{
   const { idautor }= req.params;
@@ -27,6 +28,16 @@ const comprobarAutor= async(req, res, next)=>{
 
 }
 
+const comprobarPost= async(req,res,next)=>{
+ 
+  const [post]= await selectPostByTituloByAutor(req.body);
+  if(post.length!==0){
+    return res.status(409).json({message: 'Este Autor ya tiene un post con el mismo titulo'})
+  }
+  next();
+
+}
+
 module.exports={
-    comprobarId, comprobarAutor
+    comprobarId, comprobarAutor, comprobarPost, comprobarPost
 }

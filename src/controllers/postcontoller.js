@@ -1,4 +1,5 @@
-const {selectAllPost}= require("../models/postmodel")
+const { selectIdAutor } = require("../models/autoresmodel");
+const {selectAllPost, selectPostByAutor, createPost, selectPostById}= require("../models/postmodel")
 const getAllPost = async(req, res, next)=>{
     try{
         const [result, fieldpaquet]= await selectAllPost();
@@ -15,6 +16,28 @@ try {
     
 }
 }
+const getPostById= async(req,res,next)=>{
+    const {idpost}= req.params;
+    try {
+        const [post]= await selectPostById(idpost);
+        res.json(post);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const getPostByAutor= async (req, res, next)=>{
+    const { idautor}= req.params;
+    try {
+        const autorpost= await selectIdAutor(idautor)
+        const [result]= await selectPostByAutor(idautor)
+        
+        autorpost.posts=result;
+        res.json(autorpost)
+    } catch (error) {
+        next(error)
+    }
+}
 
 const getAllCategories=async(req,res,next)=>{
     try {
@@ -24,6 +47,21 @@ const getAllCategories=async(req,res,next)=>{
     }
 }
 
+const postPost= async(req,res,next)=>{
+    try {
+        const [result]= await createPost(req.body);
+        const {insertId}= result
+        const [post]= await selectPostById(insertId);
+        if(!post){
+            return res.status(500).json({message: 'Fallo al crear el post'})
+        }
+        res.json(post)
+    } catch (error) {
+        res.json(error)
+    }
+
+}
+
 module.exports={
-    getAllPost, getAllCategories,getPostAutores
+    getAllPost, getAllCategories,getPostAutores, getPostById, getPostByAutor, postPost
 }

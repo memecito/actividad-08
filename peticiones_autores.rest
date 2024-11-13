@@ -6,16 +6,37 @@ GET {{url}}/autores
 GET  {{url}}/autores/10
 
 ###
+GET {{url}}/post/
+
+###
+GET {{url}}/post/27
+
+###
 GET  {{url}}/post/autores
+
+###
+GET  {{url}}/post/autores/1
 
 ###
 POST {{url}}/autores
 Content-Type: application/json
 
 {
-    "nombre": "AAA",
-    "email":"Maria@antonio.com",
+    "nombre": "BBB",
+    "email":"BBB@antonio.com",
     "imagen":"Laura.jpg"
+}
+
+###
+POST {{url}}/post
+Content-Type: application/json
+
+{
+    "titulo": "el arte de programar y no volverte loco",
+    "descripcion": "Manual de programacion y como estrellar el ordenador cuando no sabes donde esta el fallo",
+    "fecha_creacion": "2024-10-23",
+    "categoria": "Informática",
+    "autor_id": 13
 }
 
 ###
@@ -29,5 +50,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{url}}/autores/29
+DELETE {{url}}/autores/34
 

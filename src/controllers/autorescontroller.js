@@ -1,5 +1,5 @@
 const {selectAll, selectIdAutor, createAutor, updateAutorById, deleteById}= require("../models/autoresmodel");
-const { selectPostIdAutor } = require("../models/postmodel");
+const { selectPostByAutor } = require("../models/postmodel");
 
 const getAllAutores = async(req,res,next)=>{
     try{
@@ -26,9 +26,17 @@ const getAutoresPost= async(req, res, next)=>{
     try {
         const [autores]= await selectAll();
         // 
-        const promAutoresPost= autores.map(autor=> selectPostIdAutor(autor.idautor))
+        const promAutoresPost= autores.map(autor=> selectPostByAutor(autor.idautor))
         const postresult =await Promise.all(promAutoresPost);   
-        autores.forEach((autor, index)=> autor.posts = postresult[index][0] )
+        autores.forEach((autor, index)=> {
+            const vacio= postresult[index][0];
+            if(vacio.length !== 0){
+                autor.posts = postresult[index][0]
+            }else{
+                autor.post = 'No tiene post todavia'
+            }
+          } )
+        
         
         res.json(autores)
     } catch (error) {
@@ -47,7 +55,7 @@ const postAutor= async(req,res,next)=>{
         const autor= await selectIdAutor(result.insertId);
         if (!autor)
         {
-            return res.json(null)
+            return res.status(500).json({message: 'Fallo al crear el autor'})
         }
         res.json(autor)       
        

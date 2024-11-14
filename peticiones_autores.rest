@@ -6,16 +6,22 @@ GET {{url}}/autores
 GET  {{url}}/autores/10
 
 ###
+GET {{url}}/autores/post
+
+###
 GET {{url}}/post/
 
 ###
-GET {{url}}/post/27
+GET {{url}}/post/20
+
+
 
 ###
 GET  {{url}}/post/autores
 
 ###
 GET  {{url}}/post/autores/1
+
 
 ###
 POST {{url}}/autores
@@ -51,4 +57,7 @@ Content-Type: application/json
 
 ###
 DELETE {{url}}/autores/34
+
+###
+DELETE {{url}}/post/4
 

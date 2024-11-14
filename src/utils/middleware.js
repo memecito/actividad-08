@@ -1,7 +1,7 @@
 const { selectIdAutor, selectAutorByUsuario, selectAutorByEmail } = require("../models/autoresmodel");
-const { selectPostByTituloByAutor } = require("../models/postmodel");
+const { selectPostByTituloByAutor, selectPostById } = require("../models/postmodel");
 
-const comprobarId =async (req, res, next)=>{
+const comprobarIdAutor =async (req, res, next)=>{
   const { idautor }= req.params;
   if(isNaN(idautor)){
     return res.status(400).json({ message: 'El id del autor es incorrecto'})
@@ -28,6 +28,19 @@ const comprobarAutor= async(req, res, next)=>{
 
 }
 
+const comprobarIdPost= async(req, res,next)=>{
+  const { idpost }= req.params;
+  if(isNaN(idpost)){
+    return res.status(400).json({ message: 'El id del post es incorrecto'})
+  }
+  const [post]= await selectPostById(idpost)
+  if(post.length===0){
+    return res.status(404).json({message: 'El post no existe'})
+  }
+
+  next();
+}
+
 const comprobarPost= async(req,res,next)=>{
  
   const [post]= await selectPostByTituloByAutor(req.body);
@@ -39,5 +52,6 @@ const comprobarPost= async(req,res,next)=>{
 }
 
 module.exports={
-    comprobarId, comprobarAutor, comprobarPost, comprobarPost
+    comprobarIdAutor, comprobarAutor, 
+    comprobarPost, comprobarIdPost
 }

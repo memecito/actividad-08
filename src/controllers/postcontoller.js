@@ -1,5 +1,6 @@
-const { selectIdAutor } = require("../models/autoresmodel");
-const {selectAllPost, selectPostByAutor, createPost, selectPostById}= require("../models/postmodel")
+const { selectIdAutor, selectAll } = require("../models/autoresmodel");
+const {selectAllPost, selectPostByAutor, createPost, selectPostById, deleteByIdPost}= require("../models/postmodel")
+
 const getAllPost = async(req, res, next)=>{
     try{
         const [result, fieldpaquet]= await selectAllPost();
@@ -10,11 +11,27 @@ const getAllPost = async(req, res, next)=>{
 }
 
 const getPostAutores= async (req, res, next)=>{
-try {
-    
-} catch (error) {
-    
-}
+    try {
+        const [autores]= await selectAll();
+        // 
+        const promAutoresPost= autores.map(autor=> selectPostByAutor(autor.idautor))
+        const postresult =await Promise.all(promAutoresPost);   
+        const result= []
+        autores.forEach((autor, index)=> {
+            const vacio= postresult[index][0];
+            if(vacio.length !== 0){
+                autor.posts = postresult[index][0]
+                result[index]= autor;
+            }
+            
+          } )
+        
+        
+        res.json(result)
+    } catch (error) {
+        next(error)
+    }
+
 }
 const getPostById= async(req,res,next)=>{
     const {idpost}= req.params;
@@ -62,6 +79,18 @@ const postPost= async(req,res,next)=>{
 
 }
 
+const deletePostByIdpost= async(req, res, next)=>{
+    const {idpost}= req.params;
+    try {
+        const [result]= await deleteByIdPost(idpost)
+        res.json(result)
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports={
-    getAllPost, getAllCategories,getPostAutores, getPostById, getPostByAutor, postPost
+    getAllPost, getAllCategories,getPostAutores, getPostById, getPostByAutor, 
+    postPost,
+    deletePostByIdpost
 }

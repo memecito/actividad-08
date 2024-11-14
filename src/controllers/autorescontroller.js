@@ -27,14 +27,12 @@ const getAutoresPost= async(req, res, next)=>{
         const [autores]= await selectAll();
         // 
         const promAutoresPost= autores.map(autor=> selectPostByAutor(autor.idautor))
-        const postresult =await Promise.all(promAutoresPost);   
+        const postresult =await Promise.all(promAutoresPost);  
+        
         autores.forEach((autor, index)=> {
             const vacio= postresult[index][0];
-            if(vacio.length !== 0){
-                autor.posts = postresult[index][0]
-            }else{
-                autor.post = 'No tiene post todavia'
-            }
+            
+            autor.posts= postresult[index][0]
           } )
         
         
@@ -78,9 +76,27 @@ const putAutor= async(req, res, next)=>{
     }
 
 }
+// const deleteAutorById= async(req, res, next)=>{
+//     const {idautor}= req.params;
+//     try {
+//        const [result]= await deleteById(idautor);
+//        if(result.affectedRows===0){
+//         return  res.json({message: 'La consulta no se ha podido realizar'})
+//       }
+//       res.json({message: 'Autor eliminado'})
+//     } catch (error) {
+//         next(error);
+//     }
+// }
+
 const deleteAutorById= async(req, res, next)=>{
+
+    //en este metodo tambien borramos los post que habia creado el autor para mantener coherencia en
+    //la base de datos, pues no tiene mucha logica que existan pos sin autor
     const {idautor}= req.params;
     try {
+
+        
        const [result]= await deleteById(idautor);
        if(result.affectedRows===0){
         return  res.json({message: 'La consulta no se ha podido realizar'})

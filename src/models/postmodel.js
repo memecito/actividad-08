@@ -29,8 +29,16 @@ function createPost({titulo, descripcion, fecha_creacion, categoria, autor_id}){
     return pool.query('insert into posts (titulo, descripcion, fecha_creacion, categoria, autor_id) values  (?,?,?,?,?)',[titulo, descripcion, fecha_creacion, categoria, autor_id])
 }
 
+function deleteByIdPost(idpost){
+    return pool.query('delete from posts where idpost = ?', [idpost])
+}
+function deleteByIdAutor(id_autor){
+    return pool.query('delete from posts where id_autor = ?', [id_autor])
+}
 
 module.exports={
     selectAllPost,selectPostById, selectPostByTitulo, selectPostByAutor,
-    selectPostByTituloByAutor, selectAllCategories, createPost, 
+    selectPostByTituloByAutor, selectAllCategories, 
+    createPost, 
+    deleteByIdPost, deleteByIdAutor
 }

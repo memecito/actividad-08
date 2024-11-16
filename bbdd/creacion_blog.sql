@@ -18,7 +18,7 @@ USE `blog` ;
 -- Table `blog`.`autores`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `blog`.`autores` (
-  `idautor` INT UNSIGNED NOT NULL,
+  `idautor` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
   `imagen` VARCHAR(45) NULL,
@@ -30,7 +30,7 @@ ENGINE = InnoDB;
 -- Table `blog`.`posts`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `blog`.`posts` (
-  `idpost` INT UNSIGNED NOT NULL,
+  `idpost` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(45) NULL,
   `descripcion` VARCHAR(45) NULL,
   `fecha_creacion` DATE NULL,
@@ -50,7 +50,7 @@ ENGINE = InnoDB;
 -- Table `blog`.`categorias`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `blog`.`categorias` (
-  `idcategoria` INT NOT NULL,
+  `idcategoria` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   PRIMARY KEY (`idcategoria`))
 ENGINE = InnoDB;

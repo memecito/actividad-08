@@ -56,7 +56,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{url}}/autores/34
+DELETE {{url}}/autores/24
 
 ###
 DELETE {{url}}/post/4
